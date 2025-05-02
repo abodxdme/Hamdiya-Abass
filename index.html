@@ -363,6 +363,17 @@
     <div class="info">
       <h1>أ.م. حمدية عباس جاسم</h1>
       <h3 class="typing">أستاذ مساعد - كلية التربية للبنات</h3>
+      
+      <!-- السطور المتحركة للخبرات -->
+      <div class="experience-counter mt-4">
+        <div class="counter-item">
+          <span class="counter" data-target="20">0</span> سنة في التعليم العالي
+        </div>
+        <div class="counter-item">
+          أكثر من <span class="counter" data-target="50">0</span>+ كتاب شكر وتقدير من رؤساء الوزراء والجامعات
+        </div>
+      </div>
+      
       <div class="d-flex flex-wrap mt-4 gap-3 justify-content-center">
         <div class="icon-box"><i class="bi bi-journal-richtext"></i>الأدب الجاهلي</div>
         <div class="icon-box"><i class="bi bi-journals"></i>تحليل النص القرآني</div>
@@ -372,7 +383,7 @@
         <div class="icon-box"><i class="bi bi-justify"></i>تحليل الخطاب</div>
       </div>
     </div>
-    <img src="ديم سان.jpg" alt="صورة الأستاذة" class="img-fluid">
+    <img src="ديم سان.png" alt="صورة الأستاذة" class="img-fluid">
   </section>
 
   <div class="note-box">
@@ -388,7 +399,7 @@
           <img src="1.jpg" class="card-img-top research-img" alt="صورة البحث الأول">
           <div class="card-body">
             <h5 class="card-title">بلاغة اسلوب التشخيص شعرالحزن عند نازك الملائكة</h5>
-            <p class="card-text">دراسة تحليلية بلاغية في شعر نازك الملائكة، مع التركيز على الأساليب البلاغية المستخدمة.</p>`
+            <p class="card-text">بحث في شخصنة الحزن عند شاعرة الحزن نازك الملائكة كيف أسقطت حزنها على  ماحولها لتحوله إلى نص اخر مفعم بالحياة</p>`
             <p class="research-date"><i class="bi bi-calendar"></i> 2023</p>
            
             <a href="https://drive.google.com/file/d/1wKon33ODTKCpyvnyfP_gcIw5rpXngcUx/view" class="btn btn-research w-100">عرض البحث <i class="bi bi-arrow-left"></i></a>
@@ -403,7 +414,8 @@
           <div class="card-body">
             <h5 class="card-title">المعوذتان دراسة اسلوبية-الاداب</h5>
             <p class="research-date"><i class="bi bi-calendar"></i>2010</p>
-            <p class="card-text">دراسة في الأدب العربي الحديث، تتناول تأثيرات الثقافة الغربية على الأدب العربي.</p>
+            <p class="card-text"> بحث في الدراسات الاسلوبية القرانية يدرس المعوذتان من مستويات متعددة وفق السياق القراني واستعماله لكل كلمة .
+            </p>
             <a href="https://drive.google.com/file/d/1kVYj8K5xt-kCOyi5Ra1pSdhJj-I0Uu7I/view?usp=sharing" class="btn btn-research w-100">عرض البحث <i class="bi bi-arrow-left"></i></a>
           </div>
         </div>
@@ -416,7 +428,7 @@
           <div class="card-body">
             <h5 class="card-title">بحث منشور البنية الاسلوبية للمجاز </h5>
             <p class="research-date"><i class="bi bi-calendar"></i>  2024</p>
-            <p class="card-text">دراسة في الأسلوبية، تركز على استخدام المجاز في الشعر العربي الحديث.</p>
+            <p class="card-text"> بحث في إبراز اساليب المجاز في ايات الخوف</p>
             <a href="https://drive.google.com/file/d/1wj0DyHaMD7WBrHPQyKtjuYfEwR6HTTMj/view" class="btn btn-research w-100">عرض البحث <i class="bi bi-arrow-left"></i></a>
           </div>
         </div>
@@ -492,5 +504,58 @@
       });
     });
   </script>
+<script>
+  // عداد الخبرات مع تأثير متدرج
+  function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const duration = +counter.getAttribute('data-duration') || 2000;
+      const start = 0;
+      const increment = target / (duration / 16); // 60fps
+      let current = start;
+      
+      const animate = () => {
+        current += increment;
+        if (current < target) {
+          counter.innerText = Math.floor(current);
+          counter.classList.add('animated');
+          requestAnimationFrame(animate);
+        } else {
+          counter.innerText = target;
+          counter.classList.remove('animated');
+        }
+      };
+      
+      animate();
+    });
+  }
+  
+  // تشغيل العداد عند التمرير إلى القسم
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.5});
+
+  const experienceSection = document.querySelector('.experience-counter');
+  if (experienceSection) {
+    observer.observe(experienceSection);
+  }
+
+  // تأثير سلس للروابط
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+      });
+    });
+  });
+</script>
 </body>
 </html>
